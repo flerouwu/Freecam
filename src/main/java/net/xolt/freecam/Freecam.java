@@ -148,7 +148,7 @@ public class Freecam {
     private static void onEnableFreecam() {
         onEnable();
         freeCamera = new FreeCamera(-420);
-        freeCamera.applyPerspective((FreecamConfig.Perspective) FreecamConfig.PERSPECTIVE.get(), FreecamConfig.CHECK_COLLISION.get() || !FreecamConfig.NO_CLIP.get());
+        freeCamera.applyPerspective((FreecamConfig.Perspective) FreecamConfig.PERSPECTIVE.get(), FreecamConfig.ALWAYS_CHECK_COLLISION.get() || !FreecamConfig.IGNORE_ALL_COLLISION.get());
         freeCamera.spawn();
         MC.setCameraEntity(freeCamera);
 

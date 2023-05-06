@@ -16,8 +16,10 @@ public class FreecamConfig {
     public static final ForgeConfigSpec.EnumValue INTERACTION_MODE;
     public static final ForgeConfigSpec.DoubleValue HORIZONTAL_SPEED;
     public static final ForgeConfigSpec.DoubleValue VERTICAL_SPEED;
-    public static final ForgeConfigSpec.BooleanValue NO_CLIP;
-    public static final ForgeConfigSpec.BooleanValue CHECK_COLLISION;
+    public static final ForgeConfigSpec.BooleanValue IGNORE_TRANSPARENT_COLLISION;
+    public static final ForgeConfigSpec.BooleanValue IGNORE_OPENABLE_COLLISION;
+    public static final ForgeConfigSpec.BooleanValue IGNORE_ALL_COLLISION;
+    public static final ForgeConfigSpec.BooleanValue ALWAYS_CHECK_COLLISION;
     public static final ForgeConfigSpec.BooleanValue FREEZE_PLAYER;
     public static final ForgeConfigSpec.BooleanValue ALLOW_INTERACT;
     public static final ForgeConfigSpec.BooleanValue DISABLE_ON_DAMAGE;
@@ -45,11 +47,17 @@ public class FreecamConfig {
         VERTICAL_SPEED = BUILDER.comment("The vertical speed of freecam.")
                 .defineInRange("Vertical Speed", 1.0, 0.0, 10.0);
 
-        NO_CLIP = BUILDER.comment("Whether you can travel through blocks in freecam.")
-                .define("No Clip", true);
+        IGNORE_TRANSPARENT_COLLISION = BUILDER.comment("You can travel through glass blocks in freecam.")
+                .define("Ignore Transparent Blocks", true);
 
-        CHECK_COLLISION = BUILDER.comment("Whether to check for initial collision, even when using No Clip.")
-                .define("Always Check Collision", false);
+        IGNORE_OPENABLE_COLLISION = BUILDER.comment("You can travel through any door, trapdoor, or gate in freecam.")
+                .define("Ignore Openable Blocks", true);
+
+        IGNORE_ALL_COLLISION = BUILDER.comment("You can travel through any block in freecam.")
+                .define("Ignore All Collision", true);
+
+        ALWAYS_CHECK_COLLISION = BUILDER.comment("Whether 'Initial Perspective' should check for collision, even when using 'Ignore All Collision'.")
+                .define("Always Check Initial Collision", false);
 
         DISABLE_ON_DAMAGE = BUILDER.comment("Disables freecam when damage is received.")
                 .define("Disable on Damage", true);
