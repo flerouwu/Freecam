@@ -1,6 +1,5 @@
 package net.xolt.freecam.config;
 
-import net.minecraft.world.level.BlockCollisions;
 import net.minecraft.world.level.block.*;
 
 import java.util.Collection;
