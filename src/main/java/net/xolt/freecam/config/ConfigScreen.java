@@ -1,6 +1,7 @@
 package net.xolt.freecam.config;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.client.gui.DialogTexts;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.OptionSlider;
 import net.minecraft.client.gui.widget.Widget;
@@ -10,7 +11,7 @@ import net.minecraft.client.gui.widget.list.OptionsRowList;
 import net.minecraft.client.settings.BooleanOption;
 import net.minecraft.client.settings.IteratableOption;
 import net.minecraft.client.settings.SliderPercentageOption;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.Optional;
@@ -22,16 +23,23 @@ public class ConfigScreen extends Screen {
     private static final int OPTIONS_LIST_TOP_HEIGHT = 24;
     private static final int OPTIONS_LIST_BOTTOM_OFFSET = 32;
     private static final int OPTIONS_LIST_ITEM_HEIGHT = 25;
-    private static final int BUTTON_WIDTH = 150;
+    private static final int DONE_BUTTON_WIDTH = 150;
     private static final int BUTTON_HEIGHT = 20;
     private static final int DONE_BUTTON_TOP_OFFSET = 26;
+    private static final int COLLISION_BUTTON_WIDTH = 100;
+    private static final int COLLISION_BUTTON_SIDE_OFFSET = 8;
+    private static final int COLLISION_BUTTON_TOP_OFFSET = 2;
 
-    private final Screen previous;
+    protected final Screen previous;
 
-    private OptionsRowList optionsRowList;
+    protected OptionsRowList optionsRowList;
 
     public ConfigScreen(Screen previous) {
-        super(new TranslationTextComponent("text.freecam.configScreen.title"));
+        this(previous, new TranslationTextComponent("text.freecam.configScreen.title"));
+    }
+
+    public ConfigScreen(Screen previous, ITextComponent title) {
+        super (title);
         this.previous = previous;
     }
 
@@ -95,22 +103,6 @@ public class ConfigScreen extends Screen {
         );
         verticalSpeed.setTooltip(MC.font.split(new TranslationTextComponent("text.freecam.configScreen.option.verticalSpeed.tooltip"), 200));
         this.optionsRowList.addBig(verticalSpeed);
-
-        BooleanOption noClip = new BooleanOption(
-                "text.freecam.configScreen.option.noClip",
-                unused -> FreecamConfig.NO_CLIP.get(),
-                (unused, newValue) -> FreecamConfig.NO_CLIP.set(newValue)
-        );
-        noClip.setTooltip(MC.font.split(new TranslationTextComponent("text.freecam.configScreen.option.noClip.tooltip"), 200));
-        this.optionsRowList.addBig(noClip);
-
-        BooleanOption checkCollision = new BooleanOption(
-                "text.freecam.configScreen.option.checkCollision",
-                unused -> FreecamConfig.CHECK_COLLISION.get(),
-                (unused, newValue) -> FreecamConfig.CHECK_COLLISION.set(newValue)
-        );
-        checkCollision.setTooltip(MC.font.split(new TranslationTextComponent("text.freecam.configScreen.option.checkCollision.tooltip"), 200));
-        this.optionsRowList.addBig(checkCollision);
 
         BooleanOption disableOnDamage = new BooleanOption(
                 "text.freecam.configScreen.option.disableOnDamage",
@@ -177,10 +169,18 @@ public class ConfigScreen extends Screen {
         this.optionsRowList.addBig(notifyTripod);
 
         this.addButton(new Button(
-                (this.width - BUTTON_WIDTH) / 2,
+                this.width - COLLISION_BUTTON_WIDTH - COLLISION_BUTTON_SIDE_OFFSET,
+                COLLISION_BUTTON_TOP_OFFSET,
+                COLLISION_BUTTON_WIDTH, BUTTON_HEIGHT,
+                new TranslationTextComponent("text.freecam.collisionOptionsScreen.title"),
+                button -> this.minecraft.setScreen(new CollisionOptionsScreen(this))
+        ));
+
+        this.addButton(new Button(
+                (this.width - DONE_BUTTON_WIDTH) / 2,
                 this.height - DONE_BUTTON_TOP_OFFSET,
-                BUTTON_WIDTH, BUTTON_HEIGHT,
-                new StringTextComponent("Done"),
+                DONE_BUTTON_WIDTH, BUTTON_HEIGHT,
+                DialogTexts.GUI_DONE,
                 button -> this.onClose()
         ));
 
@@ -207,5 +207,64 @@ public class ConfigScreen extends Screen {
         drawCenteredString(matrixStack, this.font, this.title.getString(),
                 this.width / 2, TITLE_HEIGHT, 0xFFFFFF);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
+    }
+
+    private static class CollisionOptionsScreen extends ConfigScreen {
+
+        public CollisionOptionsScreen(Screen previous) {
+            super(previous, new TranslationTextComponent("text.freecam.collisionOptionsScreen.title"));
+        }
+
+        @Override
+        protected void init() {
+            this.optionsRowList = new OptionsRowList(
+                    this.minecraft, this.width, this.height,
+                    OPTIONS_LIST_TOP_HEIGHT,
+                    this.height - OPTIONS_LIST_BOTTOM_OFFSET,
+                    OPTIONS_LIST_ITEM_HEIGHT
+            );
+
+            BooleanOption ignoreTransparent = new BooleanOption(
+                    "text.freecam.configScreen.collision.option.ignoreTransparent",
+                    unused -> FreecamConfig.IGNORE_TRANSPARENT_COLLISION.get(),
+                    (unused, newValue) -> FreecamConfig.IGNORE_TRANSPARENT_COLLISION.set(newValue)
+            );
+            ignoreTransparent.setTooltip(MC.font.split(new TranslationTextComponent("text.freecam.configScreen.collision.option.ignoreTransparent.tooltip"), 200));
+            this.optionsRowList.addBig(ignoreTransparent);
+
+            BooleanOption ignoreOpenable = new BooleanOption(
+                    "text.freecam.configScreen.collision.option.ignoreOpenable",
+                    unused -> FreecamConfig.IGNORE_OPENABLE_COLLISION.get(),
+                    (unused, newValue) -> FreecamConfig.IGNORE_OPENABLE_COLLISION.set(newValue)
+            );
+            ignoreOpenable.setTooltip(MC.font.split(new TranslationTextComponent("text.freecam.configScreen.collision.option.ignoreOpenable.tooltip"), 200));
+            this.optionsRowList.addBig(ignoreOpenable);
+
+            BooleanOption ignoreAll = new BooleanOption(
+                    "text.freecam.configScreen.collision.option.ignoreAll",
+                    unused -> FreecamConfig.IGNORE_ALL_COLLISION.get(),
+                    (unused, newValue) -> FreecamConfig.IGNORE_ALL_COLLISION.set(newValue)
+            );
+            ignoreAll.setTooltip(MC.font.split(new TranslationTextComponent("text.freecam.configScreen.collision.option.ignoreAll.tooltip"), 200));
+            this.optionsRowList.addBig(ignoreAll);
+
+            BooleanOption alwaysCheck = new BooleanOption(
+                    "text.freecam.configScreen.collision.option.alwaysCheck",
+                    unused -> FreecamConfig.ALWAYS_CHECK_COLLISION.get(),
+                    (unused, newValue) -> FreecamConfig.ALWAYS_CHECK_COLLISION.set(newValue)
+            );
+            alwaysCheck.setTooltip(MC.font.split(new TranslationTextComponent("text.freecam.configScreen.collision.option.alwaysCheck.tooltip"), 200));
+            this.optionsRowList.addBig(alwaysCheck);
+
+            this.addWidget(optionsRowList);
+
+            this.addButton(new Button(
+                    (this.width - DONE_BUTTON_WIDTH) / 2,
+                    this.height - DONE_BUTTON_TOP_OFFSET,
+                    DONE_BUTTON_WIDTH, BUTTON_HEIGHT,
+                    DialogTexts.GUI_DONE,
+                    button -> this.onClose()
+            ));
+        }
     }
 }
