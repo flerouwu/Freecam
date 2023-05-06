@@ -7,6 +7,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.OptionsList;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.FormattedCharSequence;
 
@@ -20,16 +21,23 @@ public class ConfigScreen extends Screen {
     private static final int OPTIONS_LIST_TOP_HEIGHT = 24;
     private static final int OPTIONS_LIST_BOTTOM_OFFSET = 32;
     private static final int OPTIONS_LIST_ITEM_HEIGHT = 25;
-    private static final int BUTTON_WIDTH = 150;
+    private static final int DONE_BUTTON_WIDTH = 150;
     private static final int BUTTON_HEIGHT = 20;
     private static final int DONE_BUTTON_TOP_OFFSET = 26;
+    private static final int COLLISION_BUTTON_WIDTH = 100;
+    private static final int COLLISION_BUTTON_SIDE_OFFSET = 8;
+    private static final int COLLISION_BUTTON_TOP_OFFSET = 2;
 
-    private final Screen previous;
+    protected final Screen previous;
 
-    private OptionsList optionsList;
+    protected OptionsList optionsList;
 
     public ConfigScreen(Screen previous) {
-        super(new TranslatableComponent("text.freecam.configScreen.title"));
+        this(previous, new TranslatableComponent("text.freecam.configScreen.title"));
+    }
+
+    public ConfigScreen(Screen previous, Component title) {
+        super (title);
         this.previous = previous;
     }
 
@@ -104,22 +112,6 @@ public class ConfigScreen extends Screen {
         );
         this.optionsList.addBig(verticalSpeed);
 
-        CycleOption<Boolean> noClip = CycleOption.createOnOff(
-                "text.freecam.configScreen.option.noClip",
-                (option) -> FreecamConfig.NO_CLIP.get(),
-                (pOptions, pOption, pValue) -> FreecamConfig.NO_CLIP.set(pValue)
-        );
-        noClip.setTooltip((mc) -> (value) -> MC.font.split(new TranslatableComponent("text.freecam.configScreen.option.noClip.tooltip"), 200));
-        this.optionsList.addBig(noClip);
-
-        CycleOption<Boolean> checkCollision = CycleOption.createOnOff(
-                "text.freecam.configScreen.option.checkCollision",
-                (option) -> FreecamConfig.CHECK_COLLISION.get(),
-                (pOptions, pOption, pValue) -> FreecamConfig.CHECK_COLLISION.set(pValue)
-        );
-        checkCollision.setTooltip((mc) -> (value) -> MC.font.split(new TranslatableComponent("text.freecam.configScreen.option.checkCollision.tooltip"), 200));
-        this.optionsList.addBig(checkCollision);
-
         CycleOption<Boolean> disableOnDamage = CycleOption.createOnOff(
                 "text.freecam.configScreen.option.disableOnDamage",
                 (option) -> FreecamConfig.DISABLE_ON_DAMAGE.get(),
@@ -187,9 +179,17 @@ public class ConfigScreen extends Screen {
         this.addWidget(optionsList);
 
         this.addRenderableWidget(new Button(
-                (this.width - BUTTON_WIDTH) / 2,
+                this.width - COLLISION_BUTTON_WIDTH - COLLISION_BUTTON_SIDE_OFFSET,
+                COLLISION_BUTTON_TOP_OFFSET,
+                COLLISION_BUTTON_WIDTH, BUTTON_HEIGHT,
+                new TranslatableComponent("text.freecam.collisionOptionsScreen.title"),
+                button -> this.minecraft.setScreen(new CollisionOptionsScreen(this))
+        ));
+
+        this.addRenderableWidget(new Button(
+                (this.width - DONE_BUTTON_WIDTH) / 2,
                 this.height - DONE_BUTTON_TOP_OFFSET,
-                BUTTON_WIDTH, BUTTON_HEIGHT,
+                DONE_BUTTON_WIDTH, BUTTON_HEIGHT,
                 CommonComponents.GUI_DONE,
                 button -> this.onClose()
         ));
@@ -208,5 +208,64 @@ public class ConfigScreen extends Screen {
         super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
         List<FormattedCharSequence> list = tooltipAt(this.optionsList, pMouseX, pMouseY);
         this.renderTooltip(pPoseStack, list, pMouseX, pMouseY);
+    }
+
+    private static class CollisionOptionsScreen extends ConfigScreen {
+
+        public CollisionOptionsScreen(Screen previous) {
+            super(previous, new TranslatableComponent("text.freecam.collisionOptionsScreen.title"));
+        }
+
+        @Override
+        protected void init() {
+            this.optionsList = new OptionsList(
+                    this.minecraft, this.width, this.height,
+                    OPTIONS_LIST_TOP_HEIGHT,
+                    this.height - OPTIONS_LIST_BOTTOM_OFFSET,
+                    OPTIONS_LIST_ITEM_HEIGHT
+            );
+
+            CycleOption<Boolean> ignoreTransparent = CycleOption.createOnOff(
+                    "text.freecam.configScreen.collision.option.ignoreTransparent",
+                    (option) -> FreecamConfig.IGNORE_TRANSPARENT_COLLISION.get(),
+                    (pOptions, pOption, pValue) -> FreecamConfig.IGNORE_TRANSPARENT_COLLISION.set(pValue)
+            );
+            ignoreTransparent.setTooltip((mc) -> (value) -> MC.font.split(new TranslatableComponent("text.freecam.configScreen.collision.option.ignoreTransparent.tooltip"), 200));
+            this.optionsList.addBig(ignoreTransparent);
+
+            CycleOption<Boolean> ignoreOpenable = CycleOption.createOnOff(
+                    "text.freecam.configScreen.collision.option.ignoreOpenable",
+                    (option) -> FreecamConfig.IGNORE_OPENABLE_COLLISION.get(),
+                    (pOptions, pOption, pValue) -> FreecamConfig.IGNORE_OPENABLE_COLLISION.set(pValue)
+            );
+            ignoreOpenable.setTooltip((mc) -> (value) -> MC.font.split(new TranslatableComponent("text.freecam.configScreen.collision.option.ignoreOpenable.tooltip"), 200));
+            this.optionsList.addBig(ignoreOpenable);
+
+            CycleOption<Boolean> ignoreAll = CycleOption.createOnOff(
+                    "text.freecam.configScreen.collision.option.ignoreAll",
+                    (option) -> FreecamConfig.IGNORE_ALL_COLLISION.get(),
+                    (pOptions, pOption, pValue) -> FreecamConfig.IGNORE_ALL_COLLISION.set(pValue)
+            );
+            ignoreAll.setTooltip((mc) -> (value) -> MC.font.split(new TranslatableComponent("text.freecam.configScreen.collision.option.ignoreAll.tooltip"), 200));
+            this.optionsList.addBig(ignoreAll);
+
+            CycleOption<Boolean> alwaysCheck = CycleOption.createOnOff(
+                    "text.freecam.configScreen.collision.option.alwaysCheck",
+                    (option) -> FreecamConfig.ALWAYS_CHECK_COLLISION.get(),
+                    (pOptions, pOption, pValue) -> FreecamConfig.ALWAYS_CHECK_COLLISION.set(pValue)
+            );
+            alwaysCheck.setTooltip((mc) -> (value) -> MC.font.split(new TranslatableComponent("text.freecam.configScreen.collision.option.alwaysCheck.tooltip"), 200));
+            this.optionsList.addBig(alwaysCheck);
+
+            this.addWidget(optionsList);
+
+            this.addRenderableWidget(new Button(
+                    (this.width - DONE_BUTTON_WIDTH) / 2,
+                    this.height - DONE_BUTTON_TOP_OFFSET,
+                    DONE_BUTTON_WIDTH, BUTTON_HEIGHT,
+                    CommonComponents.GUI_DONE,
+                    button -> this.onClose()
+            ));
+        }
     }
 }

@@ -161,7 +161,7 @@ public class FreeCamera extends LocalPlayer {
 
     // Prevents pistons from moving FreeCamera when noClip is enabled.
     @Override public PushReaction getPistonPushReaction() {
-        return FreecamConfig.NO_CLIP.get() ? PushReaction.IGNORE : PushReaction.NORMAL;
+        return FreecamConfig.IGNORE_ALL_COLLISION.get() ? PushReaction.IGNORE : PushReaction.NORMAL;
     }
 
     // Ensures that the FreeCamera is always in the swimming pose.
@@ -189,7 +189,6 @@ public class FreeCamera extends LocalPlayer {
 
     @Override
     public void aiStep() {
-        noPhysics = FreecamConfig.NO_CLIP.get();
         if (FreecamConfig.FLIGHT_MODE.get().equals(FreecamConfig.FlightMode.DEFAULT)) {
             getAbilities().setFlyingSpeed(0);
             Motion.doMotion(this, FreecamConfig.HORIZONTAL_SPEED.get(), FreecamConfig.VERTICAL_SPEED.get());
