@@ -17,16 +17,23 @@ public class ConfigScreen extends Screen {
     private static final int OPTIONS_LIST_TOP_HEIGHT = 24;
     private static final int OPTIONS_LIST_BOTTOM_OFFSET = 32;
     private static final int OPTIONS_LIST_ITEM_HEIGHT = 25;
-    private static final int BUTTON_WIDTH = 150;
+    private static final int DONE_BUTTON_WIDTH = 150;
     private static final int BUTTON_HEIGHT = 20;
     private static final int DONE_BUTTON_TOP_OFFSET = 26;
+    private static final int COLLISION_BUTTON_WIDTH = 100;
+    private static final int COLLISION_BUTTON_SIDE_OFFSET = 8;
+    private static final int COLLISION_BUTTON_TOP_OFFSET = 2;
 
-    private final Screen previous;
+    protected final Screen previous;
 
-    private OptionsList optionsList;
+    protected OptionsList optionsList;
 
     public ConfigScreen(Screen previous) {
-        super(Component.translatable("text.freecam.configScreen.title"));
+        this(previous, Component.translatable("text.freecam.configScreen.title"));
+    }
+
+    public ConfigScreen(Screen previous, Component title) {
+        super (title);
         this.previous = previous;
     }
 
@@ -95,22 +102,6 @@ public class ConfigScreen extends Screen {
         );
         this.optionsList.addBig(verticalSpeed);
 
-        OptionInstance<Boolean> noClip = OptionInstance.createBoolean(
-                "text.freecam.configScreen.option.noClip",
-                (value) -> Tooltip.create(Component.translatable("text.freecam.configScreen.option.noClip.tooltip")),
-                FreecamConfig.NO_CLIP.get(),
-                (value) -> FreecamConfig.NO_CLIP.set(value)
-        );
-        this.optionsList.addBig(noClip);
-
-        OptionInstance<Boolean> checkCollision = OptionInstance.createBoolean(
-                "text.freecam.configScreen.option.checkCollision",
-                (value) -> Tooltip.create(Component.translatable("text.freecam.configScreen.option.checkCollision.tooltip")),
-                FreecamConfig.CHECK_COLLISION.get(),
-                (value) -> FreecamConfig.CHECK_COLLISION.set(value)
-        );
-        this.optionsList.addBig(checkCollision);
-
         OptionInstance<Boolean> disableOnDamage = OptionInstance.createBoolean(
                 "text.freecam.configScreen.option.disableOnDamage",
                 (value) -> Tooltip.create(Component.translatable("text.freecam.configScreen.option.disableOnDamage.tooltip")),
@@ -177,11 +168,17 @@ public class ConfigScreen extends Screen {
 
         this.addWidget(optionsList);
 
+        this.addRenderableWidget(Button.builder(Component.translatable("text.freecam.collisionOptionsScreen.title"), (button) -> {
+            this.minecraft.setScreen(new CollisionOptionsScreen(this));
+        }).bounds(this.width - COLLISION_BUTTON_WIDTH - COLLISION_BUTTON_SIDE_OFFSET,
+                COLLISION_BUTTON_TOP_OFFSET,
+                COLLISION_BUTTON_WIDTH, BUTTON_HEIGHT).build());
+
         this.addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, (button) -> {
             this.onClose();
-        }).bounds((this.width - BUTTON_WIDTH) / 2,
+        }).bounds((this.width - DONE_BUTTON_WIDTH) / 2,
                 this.height - DONE_BUTTON_TOP_OFFSET,
-                BUTTON_WIDTH, BUTTON_HEIGHT).build());
+                DONE_BUTTON_WIDTH, BUTTON_HEIGHT).build());
     }
 
     @Override
@@ -195,5 +192,62 @@ public class ConfigScreen extends Screen {
         this.optionsList.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
         drawCenteredString(pPoseStack, this.font, this.title, this.width / 2, TITLE_HEIGHT, 16777215);
         super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
+    }
+
+    private static class CollisionOptionsScreen extends ConfigScreen {
+
+        public CollisionOptionsScreen(Screen previous) {
+            super(previous, Component.translatable("text.freecam.collisionOptionsScreen.title"));
+        }
+
+        @Override
+        protected void init() {
+            this.optionsList = new OptionsList(
+                    this.minecraft, this.width, this.height,
+                    OPTIONS_LIST_TOP_HEIGHT,
+                    this.height - OPTIONS_LIST_BOTTOM_OFFSET,
+                    OPTIONS_LIST_ITEM_HEIGHT
+            );
+
+            OptionInstance<Boolean> ignoreTransparent = OptionInstance.createBoolean(
+                    "text.freecam.configScreen.collision.option.ignoreTransparent",
+                    (value) -> Tooltip.create(Component.translatable("text.freecam.configScreen.collision.option.ignoreTransparent.tooltip")),
+                    FreecamConfig.IGNORE_TRANSPARENT_COLLISION.get(),
+                    (value) -> FreecamConfig.IGNORE_TRANSPARENT_COLLISION.set(value)
+            );
+            this.optionsList.addBig(ignoreTransparent);
+
+            OptionInstance<Boolean> ignoreOpenable = OptionInstance.createBoolean(
+                    "text.freecam.configScreen.collision.option.ignoreOpenable",
+                    (value) -> Tooltip.create(Component.translatable("text.freecam.configScreen.collision.option.ignoreOpenable.tooltip")),
+                    FreecamConfig.IGNORE_OPENABLE_COLLISION.get(),
+                    (value) -> FreecamConfig.IGNORE_OPENABLE_COLLISION.set(value)
+            );
+            this.optionsList.addBig(ignoreOpenable);
+
+            OptionInstance<Boolean> ignoreAll = OptionInstance.createBoolean(
+                    "text.freecam.configScreen.collision.option.ignoreAll",
+                    (value) -> Tooltip.create(Component.translatable("text.freecam.configScreen.collision.option.ignoreAll.tooltip")),
+                    FreecamConfig.IGNORE_ALL_COLLISION.get(),
+                    (value) -> FreecamConfig.IGNORE_ALL_COLLISION.set(value)
+            );
+            this.optionsList.addBig(ignoreAll);
+
+            OptionInstance<Boolean> alwaysCheck = OptionInstance.createBoolean(
+                    "text.freecam.configScreen.collision.option.alwaysCheck",
+                    (value) -> Tooltip.create(Component.translatable("text.freecam.configScreen.collision.option.alwaysCheck.tooltip")),
+                    FreecamConfig.ALWAYS_CHECK_COLLISION.get(),
+                    (value) -> FreecamConfig.ALWAYS_CHECK_COLLISION.set(value)
+            );
+            this.optionsList.addBig(alwaysCheck);
+
+            this.addWidget(optionsList);
+
+            this.addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, (button) -> {
+                this.onClose();
+            }).bounds((this.width - DONE_BUTTON_WIDTH) / 2,
+                    this.height - DONE_BUTTON_TOP_OFFSET,
+                    DONE_BUTTON_WIDTH, BUTTON_HEIGHT).build());
+        }
     }
 }
