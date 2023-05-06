@@ -7,6 +7,8 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import me.shedaniel.clothconfig2.gui.entries.SelectionListEntry;
 
+import static me.shedaniel.autoconfig.annotation.ConfigEntry.Gui.EnumHandler.EnumDisplayOption;
+
 @Config(name = "freecam")
 public class ModConfig implements ConfigData {
 
@@ -19,15 +21,15 @@ public class ModConfig implements ConfigData {
     }
 
     @ConfigEntry.Gui.Tooltip
-    @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
+    @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
     public FlightMode flightMode = FlightMode.DEFAULT;
 
     @ConfigEntry.Gui.Tooltip
-    @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
+    @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
     public Perspective perspective = Perspective.INSIDE;
 
     @ConfigEntry.Gui.Tooltip
-    @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
+    @ConfigEntry.Gui.EnumHandler(option = EnumDisplayOption.BUTTON)
     public InteractionMode interactionMode = InteractionMode.CAMERA;
 
     @ConfigEntry.Gui.Tooltip
@@ -36,11 +38,22 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.Gui.Tooltip
     public double verticalSpeed = 1.0;
 
-    @ConfigEntry.Gui.Tooltip(count = 2)
-    public boolean noClip = false;
-
     @ConfigEntry.Gui.Tooltip
-    public boolean checkCollision = false;
+    @ConfigEntry.Gui.CollapsibleObject
+    public CollisionConfig collision = new CollisionConfig();
+    public static class CollisionConfig {
+        @ConfigEntry.Gui.Tooltip(count = 2)
+        public boolean ignoreTransparent = true;
+
+        @ConfigEntry.Gui.Tooltip(count = 2)
+        public boolean ignoreOpenable = true;
+
+        @ConfigEntry.Gui.Tooltip(count = 3)
+        public boolean ignoreAll = true;
+
+        @ConfigEntry.Gui.Tooltip(count = 2)
+        public boolean alwaysCheck = false;
+    }
 
     @ConfigEntry.Gui.Tooltip
     public boolean disableOnDamage = true;
