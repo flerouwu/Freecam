@@ -3,7 +3,7 @@
   "package": "net.xolt.freecam.mixins",
   "compatibilityLevel": "JAVA_8",
   "client": [
-    "BlockCollisionSpliteratorMixin",
+    "AbstractBlockMixin",
     "CameraMixin",
     "ClientConnectionMixin",
     "ClientPlayerEntityMixin",
@@ -11,6 +11,7 @@
     "ClientPlayNetworkHandlerMixin",
     "EntityMixin",
     "EntityRenderDispatcherMixin",
+    "EntityShapeContextMixin",
     "GameOptionsMixin",
     "GameRendererAccessor",
     "GameRendererMixin",
