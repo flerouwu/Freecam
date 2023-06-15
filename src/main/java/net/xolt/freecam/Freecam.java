@@ -121,7 +121,7 @@ public class Freecam {
         activeTripod = keyCode;
 
         if (FreecamConfig.NOTIFY_TRIPOD.get()) {
-            MC.player.displayClientMessage(new TranslationTextComponent("msg.freecam.enablePersistent").append("" + activeTripod % GLFW.GLFW_KEY_0), true);
+            MC.player.displayClientMessage(new TranslationTextComponent("msg.freecam.openTripod").append("" + activeTripod % GLFW.GLFW_KEY_0), true);
         }
     }
 
@@ -131,7 +131,7 @@ public class Freecam {
 
         if (MC.player != null) {
             if (FreecamConfig.NOTIFY_TRIPOD.get()) {
-                MC.player.displayClientMessage(new TranslationTextComponent("msg.freecam.disablePersistent").append("" + activeTripod % GLFW.GLFW_KEY_0), true);
+                MC.player.displayClientMessage(new TranslationTextComponent("msg.freecam.closeTripod").append("" + activeTripod % GLFW.GLFW_KEY_0), true);
             }
         }
         activeTripod = null;
