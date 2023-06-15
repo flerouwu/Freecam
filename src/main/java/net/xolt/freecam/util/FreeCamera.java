@@ -21,7 +21,7 @@ import static net.xolt.freecam.Freecam.MC;
 
 public class FreeCamera extends LocalPlayer {
 
-    private static final ClientPacketListener CONNECTION = new ClientPacketListener(MC, MC.screen, MC.getConnection().getConnection(), MC.getCurrentServer(), new GameProfile(UUID.randomUUID(), "FreeCamera"), MC.getTelemetryManager().createWorldSessionManager(false, null)) {
+    private static final ClientPacketListener CONNECTION = new ClientPacketListener(MC, MC.screen, MC.getConnection().getConnection(), MC.getCurrentServer(), new GameProfile(UUID.randomUUID(), "FreeCamera"), MC.getTelemetryManager().createWorldSessionManager(false, null, null)) {
         @Override
         public void send(Packet<?> packet) {
         }
@@ -198,6 +198,6 @@ public class FreeCamera extends LocalPlayer {
         }
         super.aiStep();
         getAbilities().flying = true;
-        onGround = false;
+        setOnGround(false);
     }
 }
