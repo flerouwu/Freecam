@@ -1,5 +1,6 @@
 package net.xolt.freecam;
 
+import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
@@ -26,6 +27,7 @@ public class Freecam implements ClientModInitializer {
     private static KeyBinding freecamBind;
     private static KeyBinding playerControlBind;
     private static KeyBinding tripodResetBind;
+    private static KeyBinding configGuiBind;
     private static boolean freecamEnabled = false;
     private static boolean tripodEnabled = false;
     private static boolean playerControlEnabled = false;
@@ -35,6 +37,7 @@ public class Freecam implements ClientModInitializer {
     private static HashMap<Integer, FreecamPosition> overworld_tripods = new HashMap<>();
     private static HashMap<Integer, FreecamPosition> nether_tripods = new HashMap<>();
     private static HashMap<Integer, FreecamPosition> end_tripods = new HashMap<>();
+    private static Perspective rememberedF5 = null;
 
     @Override
     public void onInitializeClient() {
@@ -45,6 +48,8 @@ public class Freecam implements ClientModInitializer {
                 "key.freecam.playerControl", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "category.freecam.freecam"));
         tripodResetBind = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.freecam.tripodReset", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "category.freecam.freecam"));
+        configGuiBind = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.freecam.configGui", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "category.freecam.freecam"));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (tripodResetBind.isPressed()) {
@@ -71,6 +76,10 @@ public class Freecam implements ClientModInitializer {
             while (playerControlBind.wasPressed()) {
                 switchControls();
             }
+
+            while (configGuiBind.wasPressed()) {
+                MC.openScreen(AutoConfig.getConfigScreen(ModConfig.class, MC.currentScreen).get());
+            }
         });
     }
 
@@ -86,6 +95,9 @@ public class Freecam implements ClientModInitializer {
             onEnableFreecam();
         }
         freecamEnabled = !freecamEnabled;
+        if (!freecamEnabled) {
+            onDisabled();
+        }
     }
 
     private static void toggleTripod(Integer keyCode) {
@@ -107,6 +119,9 @@ public class Freecam implements ClientModInitializer {
             }
             onEnableTripod(keyCode);
             tripodEnabled = true;
+        }
+        if (!tripodEnabled) {
+            onDisabled();
         }
     }
 
@@ -149,7 +164,7 @@ public class Freecam implements ClientModInitializer {
         MC.setCameraEntity(freeCamera);
         activeTripod = keyCode;
 
-        if (ModConfig.INSTANCE.notifyTripod) {
+        if (ModConfig.INSTANCE.notification.notifyTripod) {
             MC.player.sendMessage(new TranslatableText("msg.freecam.openTripod").append("" + activeTripod % GLFW.GLFW_KEY_0), true);
         }
     }
@@ -159,7 +174,7 @@ public class Freecam implements ClientModInitializer {
         onDisable();
 
         if (MC.player != null) {
-            if (ModConfig.INSTANCE.notifyTripod) {
+            if (ModConfig.INSTANCE.notification.notifyTripod) {
                 MC.player.sendMessage(new TranslatableText("msg.freecam.closeTripod").append("" + activeTripod % GLFW.GLFW_KEY_0), true);
             }
         }
@@ -169,11 +184,11 @@ public class Freecam implements ClientModInitializer {
     private static void onEnableFreecam() {
         onEnable();
         freeCamera = new FreeCamera(-420);
-        freeCamera.applyPerspective(ModConfig.INSTANCE.perspective, ModConfig.INSTANCE.collision.alwaysCheck || !(ModConfig.INSTANCE.collision.ignoreAll && canUseCheats()));
+        freeCamera.applyPerspective(ModConfig.INSTANCE.visual.perspective, ModConfig.INSTANCE.collision.alwaysCheck || !(ModConfig.INSTANCE.collision.ignoreAll && canUseCheats()));
         freeCamera.spawn();
         MC.setCameraEntity(freeCamera);
 
-        if (ModConfig.INSTANCE.notifyFreecam) {
+        if (ModConfig.INSTANCE.notification.notifyFreecam) {
             MC.player.sendMessage(new TranslatableText("msg.freecam.enable"), true);
         }
     }
@@ -182,7 +197,7 @@ public class Freecam implements ClientModInitializer {
         onDisable();
 
         if (MC.player != null) {
-            if (ModConfig.INSTANCE.notifyFreecam) {
+            if (ModConfig.INSTANCE.notification.notifyFreecam) {
                 MC.player.sendMessage(new TranslatableText("msg.freecam.disable"), true);
             }
         }
@@ -190,8 +205,9 @@ public class Freecam implements ClientModInitializer {
 
     private static void onEnable() {
         MC.chunkCullingEnabled = false;
-        ((GameRendererAccessor) MC.gameRenderer).setRenderHand(ModConfig.INSTANCE.showHand);
+        ((GameRendererAccessor) MC.gameRenderer).setRenderHand(ModConfig.INSTANCE.visual.showHand);
 
+        rememberedF5 = MC.options.getPerspective();
         if (MC.gameRenderer.getCamera().isThirdPerson()) {
             MC.options.setPerspective(Perspective.FIRST_PERSON);
         }
@@ -211,6 +227,12 @@ public class Freecam implements ClientModInitializer {
         }
     }
 
+    private static void onDisabled() {
+        if (rememberedF5 != null) {
+            MC.options.setPerspective(rememberedF5);
+        }
+    }
+
     private static void resetCamera(int keyCode) {
         if (tripodEnabled && activeTripod != null && activeTripod == keyCode && freeCamera != null) {
             freeCamera.copyPositionAndRotation(MC.player);
@@ -218,7 +240,7 @@ public class Freecam implements ClientModInitializer {
             getTripodsForDimension().put(keyCode, null);
         }
 
-        if (ModConfig.INSTANCE.notifyTripod) {
+        if (ModConfig.INSTANCE.notification.notifyTripod) {
             MC.player.sendMessage(new TranslatableText("msg.freecam.tripodReset").append("" + keyCode % GLFW.GLFW_KEY_0), true);
         }
     }
