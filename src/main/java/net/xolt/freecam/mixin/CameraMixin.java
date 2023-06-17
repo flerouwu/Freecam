@@ -16,9 +16,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Camera.class)
 public class CameraMixin {
-    @Shadow Entity entity;
-    @Shadow float eyeHeightOld;
-    @Shadow float eyeHeight;
+
+    @Shadow
+    private Entity entity;
+
+    @Shadow
+    private float eyeHeightOld;
+
+    @Shadow
+    private float eyeHeight;
 
     // When toggling freecam, update the camera's eye height instantly without any transition.
     @Inject(method = "setup", at = @At("HEAD"))
