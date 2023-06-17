@@ -38,7 +38,7 @@ public abstract class BlockStateBaseMixin {
             if (FreecamConfig.IGNORE_TRANSPARENT_BLOCKS.get() && CollisionWhitelist.isTransparent(getBlock())) {
                 cir.setReturnValue(Shapes.empty());
             }
-            // Ignore transparent block collisions
+            // Ignore openable block collisions
             if (FreecamConfig.IGNORE_OPENABLE_BLOCKS.get() && CollisionWhitelist.isOpenable(getBlock())) {
                 cir.setReturnValue(Shapes.empty());
             }
