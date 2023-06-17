@@ -12,6 +12,7 @@ import net.minecraft.world.phys.Vec3;
 import net.xolt.freecam.Freecam;
 import net.xolt.freecam.config.FreecamConfig;
 import org.joml.Matrix4f;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,6 +25,7 @@ import static net.xolt.freecam.Freecam.MC;
 public class LevelRendererMixin {
 
     @Shadow
+    @Final
     private RenderBuffers renderBuffers;
 
     // Makes the player render if showPlayer is enabled.
