@@ -23,11 +23,11 @@ public abstract class AbstractBlockStateMixin {
 
     @Inject(method = "getCollisionShape(Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/ShapeContext;)Lnet/minecraft/util/shape/VoxelShape;", at = @At("HEAD"), cancellable = true)
     private void onGetCollisionShape(BlockView world, BlockPos pos, ShapeContext context, CallbackInfoReturnable<VoxelShape> cir) {
-        if (context instanceof EntityShapeContext && ((EntityShapeContext)context).getEntity() instanceof FreeCamera && Freecam.canUseCheats()) {
+        if (context instanceof EntityShapeContext && ((EntityShapeContext)context).getEntity() instanceof FreeCamera) {
             // Unless "Always Check Initial Collision" is on and Freecam isn't enabled yet
             if (!ModConfig.INSTANCE.collision.alwaysCheck || Freecam.isEnabled()) {
                 // Ignore all collisions
-                if (ModConfig.INSTANCE.collision.ignoreAll) {
+                if (ModConfig.INSTANCE.collision.ignoreAll && Freecam.canUseCheats()) {
                     cir.setReturnValue(VoxelShapes.empty());
                 }
             }
