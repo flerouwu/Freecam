@@ -35,7 +35,7 @@ public class CameraMixin {
     // Removes the submersion overlay when underwater, in lava, or powdered snow.
     @Inject(method = "getFluidInCamera", at = @At("HEAD"), cancellable = true)
     public void onGetSubmersionType(CallbackInfoReturnable<FogType> cir) {
-        if (Freecam.isEnabled() && !FreecamConfig.SHOW_SUBMERSION.get()) {
+        if (Freecam.isEnabled() && !FreecamConfig.SHOW_SUBMERSION_FOG.get()) {
             cir.setReturnValue(FogType.NONE);
         }
     }
