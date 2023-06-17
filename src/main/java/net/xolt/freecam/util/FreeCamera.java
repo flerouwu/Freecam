@@ -11,7 +11,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.PushReaction;
-import net.xolt.freecam.Freecam;
 import net.minecraftforge.common.ForgeMod;
 import net.xolt.freecam.config.FreecamConfig;
 
