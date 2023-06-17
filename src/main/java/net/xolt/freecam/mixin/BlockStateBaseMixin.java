@@ -35,11 +35,11 @@ public abstract class BlockStateBaseMixin {
                 }
             }
             // Ignore transparent block collisions
-            if (FreecamConfig.IGNORE_TRANSPARENT_COLLISION.get() && CollisionWhitelist.isTransparent(getBlock())) {
+            if (FreecamConfig.IGNORE_TRANSPARENT_BLOCKS.get() && CollisionWhitelist.isTransparent(getBlock())) {
                 cir.setReturnValue(Shapes.empty());
             }
-            // Ignore transparent block collisions
-            if (FreecamConfig.IGNORE_OPENABLE_COLLISION.get() && CollisionWhitelist.isOpenable(getBlock())) {
+            // Ignore openable block collisions
+            if (FreecamConfig.IGNORE_OPENABLE_BLOCKS.get() && CollisionWhitelist.isOpenable(getBlock())) {
                 cir.setReturnValue(Shapes.empty());
             }
         }
