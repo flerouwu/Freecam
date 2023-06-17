@@ -29,7 +29,6 @@ public class Freecam {
     public static final KeyBinding KEY_PLAYER_CONTROL = new KeyBinding("key.freecam.playerControl", InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "category.freecam.freecam");
     public static final KeyBinding KEY_TRIPOD_RESET = new KeyBinding("key.freecam.tripodReset", InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "category.freecam.freecam");
     public static final KeyBinding KEY_CONFIG_GUI = new KeyBinding("key.freecam.configGui", InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "category.freecam.freecam");
-
     private static boolean freecamEnabled = false;
     private static boolean tripodEnabled = false;
     private static boolean playerControlEnabled = false;
@@ -39,6 +38,7 @@ public class Freecam {
     private static HashMap<Integer, FreecamPosition> overworld_tripods = new HashMap<>();
     private static HashMap<Integer, FreecamPosition> nether_tripods = new HashMap<>();
     private static HashMap<Integer, FreecamPosition> end_tripods = new HashMap<>();
+    private static PointOfView rememberedF5 = null;
 
     public Freecam() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, FreecamConfig.SPEC, "freecam.toml");
@@ -58,6 +58,9 @@ public class Freecam {
             onEnableFreecam();
         }
         freecamEnabled = !freecamEnabled;
+        if (!freecamEnabled) {
+            onDisabled();
+        }
     }
 
     public static void toggleTripod(Integer keyCode) {
@@ -79,6 +82,9 @@ public class Freecam {
             }
             onEnableTripod(keyCode);
             tripodEnabled = true;
+        }
+        if (!tripodEnabled) {
+            onDisabled();
         }
     }
 
@@ -164,6 +170,7 @@ public class Freecam {
         MC.smartCull = false;
         ((GameRendererAccessor) MC.gameRenderer).setRenderHand(FreecamConfig.SHOW_HAND.get());
 
+        rememberedF5 = MC.options.getCameraType();
         if (MC.gameRenderer.getMainCamera().isDetached()) {
             MC.options.setCameraType(PointOfView.FIRST_PERSON);
         }
@@ -180,6 +187,12 @@ public class Freecam {
 
         if (MC.player != null) {
             MC.player.input = new MovementInputFromOptions(MC.options);
+        }
+    }
+
+    private static void onDisabled() {
+        if (rememberedF5 != null) {
+            MC.options.setCameraType(rememberedF5);
         }
     }
 
