@@ -28,6 +28,7 @@ public class Freecam {
     public static final KeyBinding KEY_TOGGLE = new KeyBinding("key.freecam.toggle", InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_F4, "category.freecam.freecam");
     public static final KeyBinding KEY_PLAYER_CONTROL = new KeyBinding("key.freecam.playerControl", InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "category.freecam.freecam");
     public static final KeyBinding KEY_TRIPOD_RESET = new KeyBinding("key.freecam.tripodReset", InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "category.freecam.freecam");
+    public static final KeyBinding KEY_CONFIG_GUI = new KeyBinding("key.freecam.configGui", InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "category.freecam.freecam");
 
     private static boolean freecamEnabled = false;
     private static boolean tripodEnabled = false;
