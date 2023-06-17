@@ -30,6 +30,7 @@ public class Freecam {
     public static final KeyMapping KEY_TOGGLE = new KeyMapping("key.freecam.toggle", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_F4, "category.freecam.freecam");
     public static final KeyMapping KEY_PLAYER_CONTROL = new KeyMapping("key.freecam.playerControl", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "category.freecam.freecam");
     public static final KeyMapping KEY_TRIPOD_RESET = new KeyMapping("key.freecam.tripodReset", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "category.freecam.freecam");
+    public static final KeyMapping KEY_CONFIG_GUI = new KeyMapping("key.freecam.configGui", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "category.freecam.freecam");
 
     private static boolean freecamEnabled = false;
     private static boolean tripodEnabled = false;

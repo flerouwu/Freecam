@@ -7,7 +7,7 @@
   "mixins": [
   ],
   "client": [
-    "BlockBehaviourMixin",
+    "BlockStateBaseMixin",
     "CameraMixin",
     "ClientPacketListenerMixin",
     "ConnectionMixin",
