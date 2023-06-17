@@ -1,10 +1,8 @@
 # Freecam
 
-This mod allows you to control your camera separately from your player. While it is enabled, you can fly around within your render distance. Disabling it will restore you to your original position. This can be useful for quickly inspecting builds and exploring your world.
+This mod allows you to control your camera separately from your player. While it is enabled, you can fly around and travel through blocks within your render distance. Disabling it will restore you to your original position. This can be useful for quickly inspecting builds and exploring your world.
 
-This version of Freecam is modified to comply with Modrinth's [rules](https://modrinth.com/legal/rules) regarding cheats and hacks. This means that access to certain features (noclip, block/entity interaction, and player freezing) is restricted unless you are an operator on the current server, in creative mode, or playing in a singleplayer world. If you would like to check out the original mod, it can be downloaded from [Curseforge](https://www.curseforge.com/minecraft/mc-mods/free-cam) or [Github](https://github.com/hashalite/Freecam).
-
-If you encounter a bug or would like to request a feature, please make a GitHub issue [here](https://github.com/hashalite/Freecam).
+This mod works in multiplayer, but may be considered cheating on some servers, so use it at your own risk.
 
 ## Keybinds
 
@@ -40,9 +38,9 @@ If you encounter a bug or would like to request a feature, please make a GitHub 
 
 | Name                           | Description                                                                                          | Default Value |
 |--------------------------------|------------------------------------------------------------------------------------------------------|---------------|
-| Ignore Transparent Blocks      | Allows travelling through transparent blocks in freecam.                                             | `false`       |
-| Ignore Openable Blocks         | Allows travelling through doors/trapdoors/gates in freecam.                                          | `false`       |
-| Ignore All Collision           | Allows travelling through all blocks in freecam.                                                     | `false`       |
+| Ignore Transparent Blocks      | Allows travelling through transparent blocks in freecam.                                             | `true`        |
+| Ignore Openable Blocks         | Allows travelling through doors/trapdoors/gates in freecam.                                          | `true`        |
+| Ignore All Collision           | Allows travelling through all blocks in freecam.                                                     | `true`        |
 | Always Check Initial Collision | Whether **Initial Perspective** should check for collision, even when using **Ignore All Collision** | `false`       |
 
 ## Requirements
@@ -53,3 +51,5 @@ If you encounter a bug or would like to request a feature, please make a GitHub 
 
 ### Forge
 - None
+
+Curseforge page [here](https://www.curseforge.com/minecraft/mc-mods/free-cam).
