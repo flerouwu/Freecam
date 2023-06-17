@@ -26,20 +26,20 @@ public abstract class BlockStateBaseMixin {
 
     @Inject(method = "getCollisionShape(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;", at = @At("HEAD"), cancellable = true)
     private void onGetCollisionShape(BlockGetter world, BlockPos pos, CollisionContext context, CallbackInfoReturnable<VoxelShape> cir) {
-        if (context instanceof EntityCollisionContext && ((EntityCollisionContext)context).getEntity() instanceof FreeCamera && Freecam.canUseCheats()) {
+        if (context instanceof EntityCollisionContext && ((EntityCollisionContext)context).getEntity() instanceof FreeCamera) {
             // Unless "Always Check Initial Collision" is on and Freecam isn't enabled yet
             if (!FreecamConfig.ALWAYS_CHECK_COLLISION.get() || Freecam.isEnabled()) {
                 // Ignore all collisions
-                if (FreecamConfig.IGNORE_ALL_COLLISION.get()) {
+                if (FreecamConfig.IGNORE_ALL_COLLISION.get() && Freecam.canUseCheats()) {
                     cir.setReturnValue(Shapes.empty());
                 }
             }
             // Ignore transparent block collisions
-            if (FreecamConfig.IGNORE_TRANSPARENT_COLLISION.get() && CollisionWhitelist.isTransparent(getBlock())) {
+            if (FreecamConfig.IGNORE_TRANSPARENT_BLOCKS.get() && CollisionWhitelist.isTransparent(getBlock())) {
                 cir.setReturnValue(Shapes.empty());
             }
             // Ignore transparent block collisions
-            if (FreecamConfig.IGNORE_OPENABLE_COLLISION.get() && CollisionWhitelist.isOpenable(getBlock())) {
+            if (FreecamConfig.IGNORE_OPENABLE_BLOCKS.get() && CollisionWhitelist.isOpenable(getBlock())) {
                 cir.setReturnValue(Shapes.empty());
             }
         }
