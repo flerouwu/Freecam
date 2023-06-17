@@ -40,10 +40,10 @@ public class ModConfig implements ConfigData {
     public CollisionConfig collision = new CollisionConfig();
     public static class CollisionConfig {
         @ConfigEntry.Gui.Tooltip
-        public boolean ignoreTransparent = false;
+        public boolean ignoreTransparent = true;
 
         @ConfigEntry.Gui.Tooltip
-        public boolean ignoreOpenable = false;
+        public boolean ignoreOpenable = true;
 
         @ConfigEntry.Gui.Tooltip(count = 3)
         public boolean ignoreAll = false;
