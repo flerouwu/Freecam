@@ -8,6 +8,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.xolt.freecam.Freecam;
+import net.xolt.freecam.config.ConfigScreen;
 
 import static net.xolt.freecam.Freecam.*;
 
@@ -42,6 +43,10 @@ public class ClientEvents {
             while (Freecam.KEY_PLAYER_CONTROL.consumeClick()) {
                 Freecam.switchControls();
             }
+
+            while (Freecam.KEY_CONFIG_GUI.consumeClick()) {
+                MC.setScreen(new ConfigScreen(MC.screen));
+            }
         }
     }
 
@@ -53,6 +58,7 @@ public class ClientEvents {
             ClientRegistry.registerKeyBinding(KEY_TOGGLE);
             ClientRegistry.registerKeyBinding(KEY_PLAYER_CONTROL);
             ClientRegistry.registerKeyBinding(KEY_TRIPOD_RESET);
+            ClientRegistry.registerKeyBinding(KEY_CONFIG_GUI);
         }
     }
 }
