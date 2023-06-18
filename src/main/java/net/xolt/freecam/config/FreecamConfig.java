@@ -29,6 +29,7 @@ public class FreecamConfig {
     public static final ForgeConfigSpec.EnumValue<Perspective> PERSPECTIVE;
     public static final ForgeConfigSpec.BooleanValue SHOW_PLAYER;
     public static final ForgeConfigSpec.BooleanValue SHOW_HAND;
+    public static final ForgeConfigSpec.BooleanValue FULL_BRIGHTNESS;
     public static final ForgeConfigSpec.BooleanValue SHOW_SUBMERSION_FOG;
 
     // Utility Options
@@ -81,6 +82,9 @@ public class FreecamConfig {
 
         SHOW_HAND = BUILDER.comment("Whether you can see your hand in freecam.")
                 .define("Show Hand", false);
+
+        FULL_BRIGHTNESS = BUILDER.comment("Increases brightness while in freecam.")
+                .define("Full Brightness", false);
 
         SHOW_SUBMERSION_FOG = BUILDER.comment("Whether you see a fog overlay underwater, in lava, or powdered snow.")
                 .define("Show Submersion Fog", false);
