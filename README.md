@@ -64,7 +64,7 @@ If you encounter a bug or would like to request a feature, please make a GitHub 
 
 ### Fabric
 - [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api)
-- [Mod Menu](https://www.curseforge.com/minecraft/mc-mods/modmenu) (Optional for easier configuration)
+- [Mod Menu](https://www.curseforge.com/minecraft/mc-mods/modmenu) (Optional)
 
 ### Forge
 - None
