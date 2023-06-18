@@ -42,6 +42,8 @@
   "text.freecam.configScreen.option.visual.showPlayer.@Tooltip": "Shows your player in its original position.",
   "text.freecam.configScreen.option.visual.showHand": "Show Hand",
   "text.freecam.configScreen.option.visual.showHand.@Tooltip": "Whether you can see your hand in freecam.",
+  "text.freecam.configScreen.option.visual.fullBright": "Full Brightness",
+  "text.freecam.configScreen.option.visual.fullBright.@Tooltip": "Increases brightness while in freecam.",
   "text.freecam.configScreen.option.visual.showSubmersion": "Show Submersion Fog",
   "text.freecam.configScreen.option.visual.showSubmersion.@Tooltip": "Whether you see a fog overlay underwater, in lava, or powdered snow.",
   "text.freecam.configScreen.option.utility": "Utility Options",
