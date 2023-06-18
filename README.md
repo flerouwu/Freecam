@@ -27,12 +27,12 @@ If you encounter a bug or would like to request a feature, please make a GitHub 
 
 ## Collision Options
 
-| Name                           | Description                                                                                          | Default Value |
-|--------------------------------|------------------------------------------------------------------------------------------------------|---------------|
-| Ignore Transparent Blocks      | Allows travelling through transparent blocks in freecam.                                             | `false`       |
-| Ignore Openable Blocks         | Allows travelling through doors/trapdoors/gates in freecam.                                          | `false`       |
-| Ignore All Collision           | Allows travelling through all blocks in freecam.                                                     | `false`       |
-| Always Check Initial Collision | Whether **Initial Perspective** should check for collision, even when using **Ignore All Collision** | `false`       |
+| Name                           | Description                                                                                                                          | Default Value |
+|--------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|---------------|
+| Ignore Transparent Blocks      | Allows travelling through transparent blocks in freecam.                                                                             | `true`        |
+| Ignore Openable Blocks         | Allows travelling through doors/trapdoors/gates in freecam.                                                                          | `true`        |
+| Ignore All Collision           | Allows travelling through all blocks in freecam.<br />**NOTE: Can only be used in singleplayer, creative, or with operator status.** | `false`       |
+| Always Check Initial Collision | Whether **Initial Perspective** should check for collision, even when using **Ignore All Collision**                                 | `false`       |
 
 ## Visual Options
 
@@ -46,12 +46,12 @@ If you encounter a bug or would like to request a feature, please make a GitHub 
 
 ## Utility Options
 
-| Name              | Description                                                                                                                                                              | Default Value |
-|-------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|
-| Disable on Damage | Disables freecam when damage is received.                                                                                                                                | `true`        |
-| Freeze Player     | Prevents player movement while freecam is active.<br />**WARNING: Multiplayer usage not advised.**                                                                       | `false`       |
-| Allow Interaction | Whether you can interact with blocks/entities in freecam.<br />**WARNING: Multiplayer usage not advised.**                                                               | `false`       |
-| Interaction Mode  | The source of block/entity interactions.<br /><br />**Options:**<br />- `CAMERA` : Interactions come from the camera<br />- `PLAYER` : Interactions come from the player | `CAMERA`      |
+| Name              | Description                                                                                                                                                                                     | Default Value |
+|-------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|
+| Disable on Damage | Disables freecam when damage is received.                                                                                                                                                       | `true`        |
+| Freeze Player     | Prevents player movement while freecam is active.<br />**NOTE: Can only be used in singleplayer, creative, or with operator status.**                                                           | `false`       |
+| Allow Interaction | Whether you can interact with blocks/entities in freecam.<br />**NOTE: Can only be used in singleplayer, creative, or with operator status.**<br />**\*Unless using interaction mode `PLAYER`** | `false`       |
+| Interaction Mode  | The source of block/entity interactions.<br /><br />**Options:**<br />- `CAMERA` : Interactions come from the camera<br />- `PLAYER` : Interactions come from the player                        | `CAMERA`      |
 
 ## Notification Options
 
