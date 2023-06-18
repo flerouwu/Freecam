@@ -304,6 +304,14 @@ public class ConfigScreen extends Screen {
             showHand.setTooltip(MC.font.split(new TranslationTextComponent("text.freecam.configScreen.option.visual.showHand.@Tooltip"), 200));
             this.optionsList.addBig(showHand);
 
+            BooleanOption fullBright = new BooleanOption(
+                    "text.freecam.configScreen.option.visual.fullBright",
+                    unused -> FreecamConfig.FULL_BRIGHTNESS.get(),
+                    (unused, newValue) -> FreecamConfig.FULL_BRIGHTNESS.set(newValue)
+            );
+            fullBright.setTooltip(MC.font.split(new TranslationTextComponent("text.freecam.configScreen.option.visual.fullBright.@Tooltip"), 200));
+            this.optionsList.addBig(fullBright);
+
             BooleanOption showSubmersion = new BooleanOption(
                     "text.freecam.configScreen.option.visual.showSubmersion",
                     unused -> FreecamConfig.SHOW_SUBMERSION_FOG.get(),
