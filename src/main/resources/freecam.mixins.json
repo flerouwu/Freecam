@@ -18,6 +18,7 @@
     "GameRendererMixin",
     "GameSettingsMixin",
     "IngameGuiMixin",
+    "LightTextureMixin",
     "LivingEntityMixin",
     "MinecraftMixin",
     "NetworkManagerMixin",
