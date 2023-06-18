@@ -42,6 +42,8 @@
   "text.freecam.configScreen.option.visual.showPlayer.@Tooltip": "在原来的位置上显示你的玩家。",
   "text.freecam.configScreen.option.visual.showHand": "显示手",
   "text.freecam.configScreen.option.visual.showHand.@Tooltip": "当你处于自由视角是否可以看到你的手。",
+  "text.freecam.configScreen.option.visual.fullBright": "Full Brightness",
+  "text.freecam.configScreen.option.visual.fullBright.@Tooltip": "Increases brightness while in freecam.",
   "text.freecam.configScreen.option.visual.showSubmersion": "显示淹没雾",
   "text.freecam.configScreen.option.visual.showSubmersion.@Tooltip": "您是否看到雾覆盖在水下、熔岩和粉状雪中。",
   "text.freecam.configScreen.option.utility": "Utility Options",
