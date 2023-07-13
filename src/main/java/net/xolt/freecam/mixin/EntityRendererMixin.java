@@ -16,6 +16,7 @@ import static net.xolt.freecam.Freecam.MC;
 @Mixin(EntityRenderer.class)
 public class EntityRendererMixin {
 
+    // Prevent rendering of nametag in inventory screen
     @Inject(method = "renderNameTag", at = @At("HEAD"), cancellable = true)
     private void onRenderLabel(Entity entity, ITextComponent text, MatrixStack matrices, IRenderTypeBuffer vertexConsumers, int light, CallbackInfo ci) {
         if (Freecam.isEnabled() && !((EntityRendererManagerAccessor)MC.getEntityRenderDispatcher()).getShouldRenderShadow()) {
