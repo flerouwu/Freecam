@@ -33,7 +33,7 @@ logoFile="icon.png"
 # A text field displayed in the mod UI
 authors="hashalite"
 # The description text for the mod (multi line!) (#mandatory)
-description="A simple, standalone freecam mod."
+description="A highly customizable freecam mod."
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.freecam]] #optional
    # the modid of the dependency
