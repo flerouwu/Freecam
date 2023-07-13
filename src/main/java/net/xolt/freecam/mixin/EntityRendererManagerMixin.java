@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(EntityRendererManager.class)
-public class EntityRenderDispatcherMixin {
+public class EntityRendererManagerMixin {
 
     // Prevents shadow being cast when Iris is enabled.
     @Inject(method = "shouldRender", at = @At("HEAD"), cancellable = true)
