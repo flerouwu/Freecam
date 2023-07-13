@@ -5,6 +5,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.network.play.ClientPlayNetHandler;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.Pose;
 import net.minecraft.network.IPacket;
 import net.minecraft.potion.Effect;
@@ -161,6 +162,12 @@ public class FreeCamera extends ClientPlayerEntity {
     // Prevents pistons from moving FreeCamera when noClip is enabled.
     @Override public PushReaction getPistonPushReaction() {
         return FreecamConfig.IGNORE_ALL_COLLISION.get() ? PushReaction.IGNORE : PushReaction.NORMAL;
+    }
+
+    // Prevents collision with solid entities (shulkers, boats)
+    @Override
+    public boolean canCollideWith(Entity other) {
+        return false;
     }
 
     // Ensures that the FreeCamera is always in the swimming pose.

@@ -4,20 +4,21 @@ import net.minecraft.block.*;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 public class CollisionWhitelist {
 
-    private static final Collection<Class<? extends Block>> transparentWhitelist = Arrays.asList(
+    private static final Collection<Class<? extends Block>> transparentWhitelist = Collections.unmodifiableList(Arrays.asList(
             AbstractGlassBlock.class,
             PaneBlock.class,
             BarrierBlock.class
-    );
+    ));
 
-    private static final Collection<Class<? extends Block>> openableWhitelist = Arrays.asList(
+    private static final Collection<Class<? extends Block>> openableWhitelist = Collections.unmodifiableList(Arrays.asList(
             FenceGateBlock.class,
             DoorBlock.class,
             TrapDoorBlock.class
-    );
+    ));
 
     public static boolean isTransparent(Block block) {
         return isMatch(block, transparentWhitelist);
