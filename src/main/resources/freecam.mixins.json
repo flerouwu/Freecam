@@ -8,6 +8,7 @@
   ],
   "client": [
     "AbstractBlockStateMixin",
+    "BubbleColumnAmbientSoundHandlerMixin",
     "CameraMixin",
     "ClientPlayerEntityMixin",
     "ClientPlayNetHandlerMixin",

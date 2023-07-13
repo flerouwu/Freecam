@@ -16,6 +16,7 @@ import static net.xolt.freecam.Freecam.MC;
 @Mixin(WorldRenderer.class)
 public class WorldRendererMixin {
 
+    // Disable player rendering if show player is disabled (non-camera LocalPlayers are rendered by default on Forge)
     @Inject(method = "renderEntity", at = @At("HEAD"), cancellable = true)
     private void onRenderEntity(Entity entity, double cameraX, double cameraY, double cameraZ, float tickDelta, MatrixStack matrices, IRenderTypeBuffer vertexConsumers, CallbackInfo ci) {
         if (entity == MC.player && Freecam.isEnabled() && !FreecamConfig.SHOW_PLAYER.get()) {
