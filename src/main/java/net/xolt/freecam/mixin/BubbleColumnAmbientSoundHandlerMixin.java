@@ -1,7 +1,7 @@
 package net.xolt.freecam.mixin;
 
-import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.resources.sounds.BubbleColumnAmbientSoundHandler;
+import net.minecraft.client.audio.BubbleColumnAmbientSoundHandler;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.xolt.freecam.util.FreeCamera;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,7 +15,7 @@ public class BubbleColumnAmbientSoundHandlerMixin {
 
     @Shadow
     @Final
-    private LocalPlayer player;
+    private ClientPlayerEntity player;
 
     // Prevent bubble column sound in freecam
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
