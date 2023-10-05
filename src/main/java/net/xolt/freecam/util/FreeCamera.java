@@ -2,14 +2,17 @@ package net.xolt.freecam.util;
 
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.client.multiplayer.CommonListenerCookie;
 import net.minecraft.client.player.KeyboardInput;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Pose;
+import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.common.ForgeMod;
@@ -21,7 +24,17 @@ import static net.xolt.freecam.Freecam.MC;
 
 public class FreeCamera extends LocalPlayer {
 
-    private static final ClientPacketListener CONNECTION = new ClientPacketListener(MC, MC.screen, MC.getConnection().getConnection(), MC.getCurrentServer(), new GameProfile(UUID.randomUUID(), "FreeCamera"), MC.getTelemetryManager().createWorldSessionManager(false, null, null)) {
+    private static final ClientPacketListener CONNECTION = new ClientPacketListener(
+            MC,
+            MC.getConnection().getConnection(),
+            new CommonListenerCookie(
+                    new GameProfile(UUID.randomUUID(), "FreeCamera"),
+                    MC.getTelemetryManager().createWorldSessionManager(false, null, null),
+                    RegistryAccess.Frozen.EMPTY,
+                    FeatureFlagSet.of(),
+                    null,
+                    MC.getCurrentServer(),
+                    MC.screen)) {
         @Override
         public void send(Packet<?> packet) {
         }
@@ -98,7 +111,7 @@ public class FreeCamera extends LocalPlayer {
             position.moveForward(negative ? -1 * increment : increment);
             applyPosition(position);
 
-            if (!canEnterPose(getPose())) {
+            if (!wouldNotSuffocateAtTargetPose(getPose())) {
                 // Revert to last non-colliding position and return whether we were unable to move at all
                 applyPosition(oldPosition);
                 return distance > 0;
@@ -110,7 +123,7 @@ public class FreeCamera extends LocalPlayer {
 
     public void spawn() {
         if (clientLevel != null) {
-            clientLevel.addPlayer(getId(), this);
+            clientLevel.addEntity(this);
         }
     }
 
