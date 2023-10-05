@@ -95,7 +95,7 @@ public class ConfigScreen extends Screen {
 
     @Override
     public void render(GuiGraphics guiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
-        this.renderBackground(guiGraphics);
+        this.renderBackground(guiGraphics, pMouseX, pMouseY, pPartialTick);
         guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, TITLE_TOP_OFFSET, 16777215);
         super.render(guiGraphics, pMouseX, pMouseY, pPartialTick);
     }
@@ -134,7 +134,7 @@ public class ConfigScreen extends Screen {
 
         @Override
         public void render(GuiGraphics guiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
-            this.renderBackground(guiGraphics);
+            this.renderBackground(guiGraphics, pMouseX, pMouseY, pPartialTick);
             this.optionsList.render(guiGraphics, pMouseX, pMouseY, pPartialTick);
             guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, TITLE_TOP_OFFSET, 16777215);
             super.render(guiGraphics, pMouseX, pMouseY, pPartialTick);
