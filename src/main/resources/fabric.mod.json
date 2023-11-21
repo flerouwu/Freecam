@@ -2,9 +2,10 @@
   "schemaVersion": 1,
   "id": "freecam",
   "version": "${version}",
-  "name": "Freecam (Modrinth Edition)",
-  "description": "A highly customizable freecam mod.",
+  "name": "Freecam (Unlocked Modrinth Edition)",
+  "description": "A highly customizable freecam mod. Modified by Flero to remove OP / Creative requirements.",
   "authors": ["hashalite"],
+  "contributors": ["Flero"],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/free-cam",
     "sources": "https://github.com/hashalite/Freecam",

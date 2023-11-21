@@ -1,3 +1,7 @@
+> [!IMPORTANT]
+> This mod is a fork of [hashalite/Freecam](https://github.com/hashalite/Freecam), without the restrictions
+> of requiring Operator Status / Creative to use certain features (such as interactions and block collision).
+
 # Freecam
 
 This mod allows you to control your camera separately from your player. While it is enabled, you can fly around within your render distance. Disabling it will restore you to your original position. This can be useful for quickly inspecting builds and exploring your world.
