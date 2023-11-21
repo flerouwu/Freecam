@@ -45,7 +45,7 @@ public class ModConfig implements ConfigData {
         @ConfigEntry.Gui.Tooltip
         public boolean ignoreOpenable = true;
 
-        @ConfigEntry.Gui.Tooltip(count = 3)
+        @ConfigEntry.Gui.Tooltip(count = 2)
         public boolean ignoreAll = false;
 
         @ConfigEntry.Gui.Tooltip(count = 2)
@@ -80,10 +80,10 @@ public class ModConfig implements ConfigData {
         @ConfigEntry.Gui.Tooltip
         public boolean disableOnDamage = true;
 
-        @ConfigEntry.Gui.Tooltip(count = 2)
+        @ConfigEntry.Gui.Tooltip()
         public boolean freezePlayer = false;
 
-        @ConfigEntry.Gui.Tooltip(count = 3)
+        @ConfigEntry.Gui.Tooltip()
         public boolean allowInteract = false;
 
         @ConfigEntry.Gui.Tooltip
