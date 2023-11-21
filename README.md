@@ -1,6 +1,8 @@
 > [!IMPORTANT]
 > This mod is a fork of [hashalite/Freecam](https://github.com/hashalite/Freecam), without the restrictions
 > of requiring Operator Status / Creative to use certain features (such as interactions and block collision).
+>
+> You can download this via the [Releases page](https://github.com/flerouwu/Freecam/releases), or build from source using `./gradlew build`.
 
 # Freecam
 
