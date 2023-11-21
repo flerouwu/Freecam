@@ -295,6 +295,9 @@ public class Freecam implements ClientModInitializer {
     }
 
     public static boolean canUseCheats() {
-        return MC.player.hasPermissionLevel(2) || MC.player.isCreative() || MC.isInSingleplayer();
+        //return MC.player.hasPermissionLevel(2) || MC.player.isCreative() || MC.isInSingleplayer();
+
+        // flerouwu fork: allow cheaty features without operator / creative
+        return true;
     }
 }
