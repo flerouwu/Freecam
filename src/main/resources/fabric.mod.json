@@ -7,9 +7,9 @@
   "authors": ["hashalite"],
   "contributors": ["Flero"],
   "contact": {
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/free-cam",
-    "sources": "https://github.com/hashalite/Freecam",
-    "issues": "https://github.com/hashalite/Freecam/issues"
+    "homepage": "https://github.com/flerouwu/Freecam",
+    "sources": "https://github.com/flerouwu/Freecam",
+    "issues": "https://github.com/flerouwu/Freecam/issues"
   },
   "license": "MIT",
   "icon": "assets/freecam/icon.png",
